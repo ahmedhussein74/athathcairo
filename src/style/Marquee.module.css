@@ -1,0 +1,44 @@
+/* Marquee.module.css */
+
+/* Define the animation keyframes */
+@keyframes marquee-scroll-rtl {
+    0% {
+        /* Start with no horizontal translation */
+        transform: translateX(0);
+    }
+    100% {
+        /* Move the content by -50% of its total width (to the left/start) */
+        transform: translateX(-50%);
+    }
+}
+
+/* Apply the animation to the inner container */
+.marqueeContainer {
+    /* The animation property combines: name | duration | timing-function | iteration-count */
+    animation: marquee-scroll-rtl 40s linear infinite;
+    
+    /* Ensure the inner container is displayed as flex and its width is set to max content
+       to hold all the duplicated items off-screen. */
+    display: flex;
+    gap: 2rem; /* Equivalent to Tailwind's 'gap-8' (32px) */
+    width: max-content;
+}
+
+/* Base styles for the outer wrapper */
+.marqueeWrapper {
+    overflow: hidden;
+    background-color: #f3f4f6; /* Equivalent to Tailwind's 'bg-gray-100' */
+    padding-top: 0.5rem; /* Equivalent to 'py-2' */
+    padding-bottom: 0.5rem;
+    position: absolute;
+    bottom: 10%;
+    /* Set direction for right-to-left layout */
+    direction: rtl;
+}
+
+/* Style for the text elements */
+.marqueeText {
+    color: #4b5563; /* Equivalent to Tailwind's 'text-gray-600' or similar */
+    font-size: 1.125rem; /* Equivalent to Tailwind's 'text-lg' */
+    white-space: nowrap;
+}

@@ -2,6 +2,8 @@ import "./globals.css";
 import Image from "next/image";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
+// 🚨 خطوة 1: استيراد مكون Script من Next.js
+import Script from 'next/script'; 
 
 export const metadata: Metadata = {
   title: "كايرو لنقل الأثاث والتغليف",
@@ -17,6 +19,8 @@ export const metadata: Metadata = {
     "نقل عفش على مدار الساعة",
   ],
 };
+
+const GTM_ID = 'GTM-MC7TCSWK'; // تعريف ID لـ GTM
 
 export default function RootLayout({
   children,
@@ -35,15 +39,32 @@ export default function RootLayout({
           href="delivery-truck.png"
           type="image/x-icon"
         />
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MC7TCSWK');</script>
-<!-- End Google Tag Manager -->
+        {/* 🚨 الجزء الأول من GTM: يستخدم next/script ويتم وضعه هنا لسهولة التعديل. 
+           strategy="beforeInteractive" يضمن حقنه في وسم <head> في وقت مبكر. */}
+        <Script
+          id="google-tag-manager-head"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GTM_ID}');`,
+          }}
+        />
       </head>
       <body>
+        {/* 🚨 الجزء الثاني من GTM: وسم noscript 
+           يجب وضعه يدوياً مباشرة بعد وسم <body> الافتتاحي */}
+        <noscript>
+          <iframe 
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0" 
+            width="0" 
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        
         {children}
 
         <div className="flex flex-col gap-3 fixed bottom-5 right-5">
@@ -56,10 +77,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
 
         <Footer />
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC7TCSWK"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
       </body>
     </html>
   );

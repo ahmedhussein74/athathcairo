@@ -81,9 +81,10 @@ const Places = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-4">
           {places.map((place, index) => (
-            <div
+            <a
+              href="tel:+0201118288327"
               key={index}
-              className="bg-white shadow rounded-lg p-4 flex items-center gap-2 border border-gray-200 border-b-2 border-b-[#ff7917]"
+              className="bg-white shadow rounded-lg p-4 flex items-center gap-2 border border-gray-200 border-b-2 border-b-[#17aeff]"
               data-aos="fade-up"
               data-aos-delay={index * 50}
             >
@@ -96,7 +97,7 @@ const Places = () => {
               <span className="text-right text-sm lg:text-base text-gray-800">
                 {place}
               </span>
-            </div>
+            </a>
           ))}
         </div>
 

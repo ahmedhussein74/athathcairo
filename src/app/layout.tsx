@@ -2,8 +2,14 @@ import "./globals.css";
 import Image from "next/image";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
-// 🚨 خطوة 1: استيراد مكون Script من Next.js
 import Script from 'next/script'; 
+import { Cairo } from "next/font/google";
+
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "كايرو لنقل الأثاث والتغليف",
@@ -20,7 +26,7 @@ export const metadata: Metadata = {
   ],
 };
 
-const GTM_ID = 'GTM-MC7TCSWK'; // تعريف ID لـ GTM
+const GTM_ID = 'GTM-MC7TCSWK';
 
 export default function RootLayout({
   children,
@@ -39,8 +45,6 @@ export default function RootLayout({
           href="delivery-truck.png"
           type="image/x-icon"
         />
-        {/* 🚨 الجزء الأول من GTM: يستخدم next/script ويتم وضعه هنا لسهولة التعديل. 
-           strategy="beforeInteractive" يضمن حقنه في وسم <head> في وقت مبكر. */}
         <Script
           id="google-tag-manager-head"
           strategy="beforeInteractive"
@@ -53,18 +57,16 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
-        {/* 🚨 الجزء الثاني من GTM: وسم noscript 
-           يجب وضعه يدوياً مباشرة بعد وسم <body> الافتتاحي */}
+      <body className={`${cairo.className}`}>
         <noscript>
-          <iframe 
+          <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0" 
-            width="0" 
-            style={{ display: 'none', visibility: 'hidden' }}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        
+
         {children}
 
         <div className="flex flex-col gap-3 fixed bottom-5 right-5">
@@ -72,7 +74,12 @@ export default function RootLayout({
             <Image src="/whatsapp.png" alt="WhatsApp" width={50} height={50} />
           </a>
           <a href="tel:+201031076847" className="z-50">
-            <Image src="/phone-call.png" alt="Phone Call" width={50} height={50} />
+            <Image
+              src="/phone-call.png"
+              alt="Phone Call"
+              width={50}
+              height={50}
+            />
           </a>
         </div>
 
